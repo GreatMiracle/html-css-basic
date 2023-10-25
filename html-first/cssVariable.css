@@ -1,0 +1,8 @@
+:root {
+    --text-color: orange;
+}
+
+h1 {
+    --text-color-local: red;
+    color: var(--text-color);
+}

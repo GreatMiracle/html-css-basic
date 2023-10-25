@@ -1,0 +1,15 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.box {
+    width: 100px;
+    height: 100px;
+    color: #fff;
+    display: flex;
+    background-color: violet;
+    padding: 10px;
+    /* box-sizing: border-box; */
+}
