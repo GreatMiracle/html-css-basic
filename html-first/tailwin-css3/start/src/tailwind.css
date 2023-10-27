@@ -1,0 +1,8 @@
+/* Nó thường bao gồm các kiểu mặc định, ví dụ như phông chữ, lề, vị trí, và các kiểu cơ bản khác mà bạn muốn áp dụng cho toàn bộ trang web */
+@tailwind base;
+
+/* kiểu cho các phần tử HTML cụ thể, chẳng hạn như nút, hộp đánh giá (checkbox), nút radio, thanh cuộn và các thành phần giao diện người dùng khác */
+@tailwind components;
+
+/* kiểm soát các thuộc tính như màu sắc, lề, độ cao, độ rộng và nhiều thuộc tính khác. */
+@tailwind utilities;
