@@ -212,3 +212,13 @@ có thuộc tính CSS sau:
 
 trang ôn kiến thức flex box: 
 [flex-box](http://https://codepen.io/enxaneta/full/adLPwv/)
+
+--------------------------------------
+### CSS BEM::: 
+BEM là viết tắt của "Block Element Modifier." Đây là một phương pháp đặt tên và tổ chức lớp (class) CSS trong việc phát triển giao diện web. BEM giúp quản lý và duy trì mã CSS dễ dàng hơn, đặc biệt là trong các dự án lớn và phức tạp. Phương pháp này tách biệt và gắn kết các phần tử của trang web thành ba phần chính:
+
+Block (B): Block là phần tử cơ bản và độc lập nhất trong giao diện, không phụ thuộc vào bất kỳ phần tử nào khác. Block có thể là một phần tử lớn như thanh điều hướng, tiêu đề, hoặc một phần tử nhỏ hơn như nút, biểu mẫu. Block thường được đặt tên với tiền tố để chỉ rõ mục đích của nó, ví dụ: .header, .button, .menu.
+
+Element (E): Element là các phần tử con của Block và không tồn tại độc lập. Các Element thuộc Block và được đặt tên dưới dạng block__element. Ví dụ: .menu__item, .button__text, trong đó menu và button là các Block.
+
+Modifier (M): Modifier được sử dụng để thay đổi giao diện của Block hoặc Element trong trạng thái cụ thể. Modifier giúp bạn tạo các biến thể của Block hoặc Element mà không cần viết lại CSS cơ bản. Modifier được đặt tên dưới dạng block__element--modifier. Ví dụ: .button--primary, .menu__item--active.
