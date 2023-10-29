@@ -10,44 +10,141 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/fontawesome-free-6.4.2-web/css/all.min.css">
     <title>Document</title>
 </head>
 
 <body>
     <div class="app">
-        <header class="header">
+        <header class="hd">
             <div class="grid">
-                <nav class="header-navbar">
-                    <ul class="header-navbar__nav-left">
-                        <li class="header-navbar__left-item">Kênh Người Bán</li>
-                        <li class="header-navbar__left-item">Trở thành Người bán Shopee</li>
-                        <li class="header-navbar__left-item">Tải ứng dụng</li>
-                        <li class="header-navbar__left-item">Kết nối</li>
+                <nav class="hd-nav">
+                    <ul class="hd-nav__l">
+                        <li class="hd-nav__l-it nav-it--sep">Kênh Người Bán</li>
+                        <li class="hd-nav__l-it nav-it--sep">Trở thành Người bán Shopee</li>
+                        <li class="hd-nav__l-it nav-it--sep hd-nav-l__down">Tải ứng dụng
+                            <div class="hd-nav-qr">
+                                <img src="./assets/img/hd-navbar/connect/linkQRCodeShoppe.png" alt="QRCodeShoppe"
+                                    class="hd__qr-img">
+                                <div class="hd-nav-qr__market">
+                                    <div class="hd-qr-mk-img__apple-androi">
+                                        <img src="./assets/img/hd-navbar/connect/linkAppStore.png" alt="AppStore"
+                                            class="hd__qr-mk-img hd__qr-app-store">
+
+                                        <img src="./assets/img/hd-navbar/connect/linkPlaySotore.png" alt="PlaySotore"
+                                            class="hd__qr-mk-img hd__qr-play-store">
+                                    </div>
+                                    <div class="hd-qr-mk-img__huawei">
+                                        <img src="./assets/img/hd-navbar/connect/linkAppGallery.png" alt="AppGallery"
+                                            class="hd__qr-mk-img hd__qr-app-gallery">
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </li>
+                        <li class="hd-nav__l-it ">
+                            Kết nối
+                            <a href="#">
+                                <i class="fa-brands fa-facebook nav-it-conn"></i>
+                            </a>
+                            <a href="#">
+                                <i class="fa-brands fa-instagram nav-it-conn"></i>
+                            </a>
+
+                        </li>
                     </ul>
 
-                    <ul class="header-navbar__nav-right">
-                        <li class="header-navbar__nav-right__item">
-                            <a href="#" class="header-navbar__right-item-link">
+                    <ul class="hd-nav__r">
+                        <li class="hd-nav__r-it hd-nav__r-it-notif">
+                            <a href="#" class="hd-nav__r-it-link">
+                                <i class="fa-regular fa-bell nav-it-conn"></i>
                                 Thông Báo
                             </a>
+                            <div class="hd-nav-r__notif">
+                                <header class="hd-nav-r-notif__title">
+                                    <h3>Thông Báo Mới Nhận</h3>
+                                </header>
+                                <ul class="hd-nav-r-notif__lst">
+                                    <li class="hd-nav-r-notif__lst-i">
+                                        <a href="#" class="hd-nav-r-notif__i-link">
+                                            <img src="./assets/img/hd-navbar/notification/nuoc_hoa_ck.jpg"
+                                                alt="nuoc_hoa_ck" class="hd-nav-r-notif__lst-i-img">
+                                            <div class="hd-nav-r-notif__lst-i-content">
+                                                <span class="hd-nav-r-notif__list-item-content-title">Nước Hoa Nam Nữ
+                                                    (Unisex) Calvin Klein CK One, CK Be Nồng Độ
+                                                    EDT Dung Tích 100ml</span>
+                                                <span class="hd-nav-r-notif__list-item-content-des">
+                                                    ⌚Giá độc quyền giảm
+                                                    đến 50%
+                                                    Voucher -50% mỗi thứ 3 hàng tuần
+                                                    Ưu đãi dành riêng thành viên từ các thương hiệu làm đẹp
+                                                    Làm đẹp không lo về giá</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="hd-nav-r-notif__lst-i">
+                                        <a href="#" class="hd-nav-r-notif__i-link">
+                                            <img src="./assets/img/hd-navbar/notification/clock_q5.jpg" alt="avatar"
+                                                class="hd-nav-r-notif__lst-i-img">
+                                            <div class="hd-nav-r-notif__lst-i-content">
+                                                <span class="hd-nav-r-notif__list-item-content-title">Loa bluetooth
+                                                    không dây S P Q5/G10 nghe nhạc kiêm đồng hồ báo thức</span>
+                                                <span class="hd-nav-r-notif__list-item-content-des">👍 Cảm ơn các bạn đã
+                                                    tin tưởng và yêu thích SAGOPY Phụ kiện. 👍
+                                                    ▪ Follow SAGOPY Phụ kiện ngay, để được nhận ngay các Mã Giảm Giá 🔖
+                                                    chỉ dành cho Follower.
+                                                    ▪ Comment và đánh giá 5 sao ⭐⭐⭐⭐⭐ cho SAGOPY Phụ kiện, kèm hình ảnh
+                                                    đẹp để nhận ngay 100 Shopee Xu 🤑 nhé.</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="hd-nav-r-notif__lst-i">
+                                        <a href="#" class="hd-nav-r-notif__i-link">
+                                            <img src="./assets/img/hd-navbar/notification/ke_de_giay_dep.jpg"
+                                                alt="avatar" class="hd-nav-r-notif__lst-i-img">
+                                            <div class="hd-nav-r-notif__lst-i-content">
+                                                <span class="hd-nav-r-notif__list-item-content-title">Kệ để giày dép 5
+                                                    tầng chữ X - Kệ đựng giày dép đa năng bằng nhựa lắp ghép -
+                                                    Sunhome</span>
+                                                <span class="hd-nav-r-notif__list-item-content-des">📦 KIỂM TRA & ĐÓNG
+                                                    GÓI HÀNG HOÁ 📦
+                                                    <br>
+                                                    📍Shop sẽ TEST sản phẩm và quay CLIP tại kho trước khi tiến hành
+                                                    đóng gói gửi cho quý khách hàng để đảm đảm bảo hàng mới 100%,đúng
+                                                    như mô tả và không vỡ xước, móp méo.<br>
+                                                    📍Quý khách hàng vui lòng quay lại CLIP bóc hàng để có cơ sở giải
+                                                    quyết khiếu nại.</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <footer class="hd-nav-r-notif__footer">
+                                    <a href="#" class="hd-nav-r-notif__footer-btn">Xem tất cả</a>
+                                </footer>
+                            </div>
                         </li>
-                        <li class="header-navbar__right-item">
-                            <a>
+                        <li class="hd-nav__r-it">
+                            <a href="#" class="hd-nav__r-it-link">
+                                <i class="fa-regular fa-circle-question nav-it-conn"></i>
                                 Hỗ Trợ
                             </a>
                         </li>
-                        <li class="header-navbar__right-item">
-                            <a>
+                        <li class="hd-nav__r-it">
+                            <a href="#" class="hd-nav__r-it-link">
+                                <i class="fa-solid fa-earth-asia nav-it-conn"></i>
                                 Tiếng Việt
-                            </a>
+                            </a href="#" class="hd-nav__r-it-link">
                         </li>
-                        <li class="header-navbar__right-item">
-                            <a>
+                        <li class="hd-nav__r-it nav-it--sep">
+                            <a href="#" class="hd-nav__r-it-link">
                                 Đăng Ký
                             </a>
                         </li>
-                        <li class="header-navbar__right-item">
-                            <a>Đăng Nhập</a>
+                        <li class="hd-nav__r-it">
+                            <a href="#" class="hd-nav__r-it-link">
+                                Đăng Nhập
+                            </a>
                         </li>
                     </ul>
                 </nav>

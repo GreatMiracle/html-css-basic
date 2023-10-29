@@ -1,31 +1,191 @@
-.header {
+.hd {
   height: 120px;
   background-image: linear-gradient(-180deg, #f53d2d, #f63);
 }
 
-.header-navbar {
+.hd-nav {
   display: flex;
+  height: 34px;
   justify-content: space-between;
+  align-items: center;
 }
 
-.header-navbar ul li {
+.hd-nav ul li {
   padding: 0;
-  font-size: 1.3rem;
+  font-size: 1.32rem;
   color: var(--white-color);
   font-weight: 400;
   padding: 4px;
+  cursor: pointer;
+  margin-left: 10px;
 }
 
-.header-navbar ul li a {
+.hd-nav__l-it:hover,
+.hd-nav__r-it:hover {
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.hd-nav ul li:last-child:hover {
+  opacity: 1; /* Đặt opacity cho thẻ li cuối cùng về 1 khi di chuột hover */
+}
+.hd-nav-l__down:hover {
+  opacity: 1;
+}
+
+.hd-nav ul li a {
   text-decoration: none;
   color: inherit;
+  cursor: pointer;
 }
 
-.header-navbar__left,
-.header-navbar__right {
+.hd-nav__l,
+.hd-nav__r {
   list-style: none;
+  display: flex;
+  margin: 0;
+}
+
+.hd-nav__r {
+  position: relative;
+}
+
+.hd-nav__l {
+  padding-left: 0px;
+  position: relative;
+}
+
+.nav-it--sep::after {
+  content: '';
+  position: absolute;
+  border-left: 1px solid hsla(0, 0%, 100%, 0.22);
+  border-right: 1px solid hsla(0, 0%, 100%, 0.22);
+  margin-left: 9px;
+  height: 14px;
+  width: 0;
+  top: calc(50% - 6px);
+}
+
+.nav-it-conn {
+  font-size: 16px;
+}
+.fa-instagram {
+  margin-left: 5px;
+}
+/* Header QR code */
+.hd-nav-l__down {
+  position: relative;
+}
+
+.hd-nav-qr {
+  position: absolute;
+  width: 185px;
+  top: 115%;
+  border: 1px solid #d1caca;
+  border-radius: 3px;
+  display: none;
+  /* animation: fadeIn ease-in 0.3s; */
+}
+
+.hd-nav-l__down:hover .hd-nav-qr {
+  display: block;
+  opacity: 10 !important;
+}
+
+.hd-nav-qr__market {
+  display: flex;
+  flex-direction: column;
+}
+
+.hd__qr-img {
+  width: 100%;
+}
+
+.hd__qr-mk-img {
+  background: var(--white-color);
+  height: 17px;
+}
+
+.hd-qr-mk-img__apple-androi {
   display: flex;
 }
 
-.header-navbar__right {
+.hd__qr-app-store,
+.hd__qr-play-store,
+.hd__qr-app-gallery {
+  margin-left: 10px;
+}
+
+.hd-qr-mk-img__huawei {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+/* NavBar right */
+.hd-nav__r-it-notif {
+  position: relative;
+}
+
+.hd-nav-r__notif {
+  position: absolute;
+  width: 405px;
+  background: var(--white-color);
+  right: 0;
+  top: 115%;
+  border: 1px solid #d3d3d3;
+}
+.hd-nav-r-notif__title {
+  height: 40px;
+  background-color: var(--white-color);
+  border-bottom: 1px solid #d3d3d3;
+}
+.hd-nav-r-notif__title h3 {
+  color: rgba(0, 0, 0, 0.26);
+  font-weight: 450;
+  margin-left: 10px;
+}
+.hd-nav-r-notif__lst {
+  padding: 0;
+  margin-right: 10px;
+}
+
+.hd-nav-r-notif__lst-i {
+}
+
+.hd-nav-r-notif__i-link {
+  display: flex;
+}
+
+.hd-nav-r-notif__lst-i-img {
+  width: 50px;
+  height: 50px;
+}
+
+.hd-nav-r-notif__lst-i-content {
+  margin-left: 8px;
+  display: block;
+}
+
+.hd-nav-r-notif__list-item-content-title {
+  color: var(--text-color);
+  font-size: 1.4rem;
+  font-weight: 400;
+  display: block;
+  padding-bottom: 5px;
+}
+
+.hd-nav-r-notif__list-item-content-des {
+  color: #757575;
+  font-size: 1.2rem;
+}
+.hd-nav-r-notif__footer {
+  display: flex;
+  color: var(--text-color);
+  border-top: 1px solid #d3d3d3;
+}
+
+.hd-nav-r-notif__footer-btn {
+  color: #333;
+  padding: 10px;
+  margin: auto;
 }
