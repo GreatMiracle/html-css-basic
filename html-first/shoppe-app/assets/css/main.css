@@ -26,7 +26,7 @@
   transition: opacity 0.2s;
 }
 
-.hd-nav ul li:last-child:hover {
+.hd-nav__l-it-conn:last-child:hover {
   opacity: 1; /* Đặt opacity cho thẻ li cuối cùng về 1 khi di chuột hover */
 }
 .hd-nav-l__down:hover {
@@ -247,9 +247,11 @@
   right: 0;
   bottom: 0;
   left: 0;
-  display: flex;
 }
-
+.modal__inner {
+  display: flex;
+  justify-content: center;
+}
 .modal__overlay {
   position: absolute;
   height: 100%;
@@ -258,21 +260,24 @@
 }
 
 .modal__body {
-  margin: auto;
+  /* margin: auto; */
   /* width: 30%;
   height: 55%; */
 
+  margin-top: 10%;
   background-color: var(--white-color);
   border-radius: 5px;
   z-index: 1;
 }
 .auth-form-register {
   width: 500px;
-  height: 550px;
+  height: 530px;
+  /* width: 30%;
+  height: 55%; */
 }
 .auth-form-login {
   width: 500px;
-  height: 400px;
+  height: 420px;
 }
 
 .auth-form__container {
@@ -432,13 +437,6 @@
   padding-left: 5px;
 }
 
-.auth-form__btn-oauth2-fb {
-}
-.auth-form__btn-oauth2-img {
-}
-.auth-form__btn-oauth2-gg {
-}
-
 .auth-form__login-aside {
   display: flex;
   justify-content: flex-end;
@@ -456,4 +454,10 @@
   content: '|';
   padding: 10px;
   cursor: default;
+}
+.show-popup-regisster-login {
+  display: block;
+}
+.hidden-popup-regisster-login {
+  display: none;
 }
