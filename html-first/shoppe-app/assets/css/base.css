@@ -2,6 +2,8 @@
   --white-color: #fff;
   --black-color: #000;
   --text-color: #333;
+  --primary-color: #ee4d2d;
+  --border-color: #dbdbdb;
 }
 
 * {
@@ -31,7 +33,7 @@ html {
 }
 
 /* Animation */
-@keyframes fadeIn {
+@keyframes fadeIn__keyframes {
   from {
     opacity: 0;
   }
