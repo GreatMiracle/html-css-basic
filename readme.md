@@ -222,3 +222,59 @@ Block (B): Block là phần tử cơ bản và độc lập nhất trong giao di
 Element (E): Element là các phần tử con của Block và không tồn tại độc lập. Các Element thuộc Block và được đặt tên dưới dạng block__element. Ví dụ: .menu__item, .button__text, trong đó menu và button là các Block.
 
 Modifier (M): Modifier được sử dụng để thay đổi giao diện của Block hoặc Element trong trạng thái cụ thể. Modifier giúp bạn tạo các biến thể của Block hoặc Element mà không cần viết lại CSS cơ bản. Modifier được đặt tên dưới dạng block__element--modifier. Ví dụ: .button--primary, .menu__item--active.
+
+--------------------------------------
+### trang icon PNG: 
+[flex-box]([http://https://codepen.io/enxaneta/full/adLPwv/](https://www.pngwing.com/en/free-png-nqkdr/download))
+
+
+---------------------------------------
+### thuộc tính display: 
+Thuộc tính display trong CSS quyết định cách một phần tử HTML được hiển thị trên trang web. Dưới đây, chúng ta sẽ giải thích các giá trị phổ biến của display cùng với ví dụ và mô tả chi tiết.
+
+***display: block;***
+Mô tả: Phần tử sẽ hiển thị như một hộp chứa và nắm toàn bộ chiều rộng của phần tử chứa nó.
+Ví dụ: div, p, h1, ul, li,...
+
+***display: inline;***
+Mô tả: Phần tử sẽ hiển thị trên cùng một dòng và chiếm chỉ chiều rộng cần thiết.
+Ví dụ: span, a, strong, em,...
+
+***display: inline-block;***
+Mô tả: Tương tự inline, nhưng phần tử có thể được định dạng về chiều rộng và chiều cao.
+Ví dụ: Nếu bạn muốn tạo một nút có chiều rộng và chiều cao được điều chỉnh.
+
+***display: none;***
+Mô tả: Phần tử bị ẩn và không chiếm không gian trên trang.
+Ví dụ: Dùng để ẩn một phần tử khi không cần hiển thị nó.
+
+***display: flex;***
+Mô tả: Tạo ra một mô hình dàn trang dựa trên một hộp chứa chuyển đổi và tự động xếp các phần tử con.
+Ví dụ: Dùng để tạo giao diện linh hoạt với căn chỉnh dễ dàng.
+
+***display: grid;***
+Mô tả: Tạo ra một mô hình lưới, cho phép bạn xác định các hàng và cột để sắp xếp phần tử con.
+Ví dụ: Sử dụng cho thiết kế trang web đa cột hoặc giao diện lưới.
+
+***display: table;***
+Mô tả: Phần tử sẽ được hiển thị như một bảng HTML, với các phần tử table-row và table-cell.
+Ví dụ: Rất ít khi sử dụng, thường cho việc tạo các giao diện có sự tương tác giống bảng.
+
+***display: table-row;***
+Mô tả: Phần tử sẽ được hiển thị như một hàng trong bảng.
+Ví dụ: Được sử dụng kết hợp với display: table để tạo bảng.
+
+***display: table-cell;***
+Mô tả: Phần tử sẽ được hiển thị như một ô trong bảng.
+Ví dụ: Được sử dụng kết hợp với display: table-row và display: table để tạo bảng.
+
+***display: inline-table;***
+Mô tả: Phần tử sẽ hiển thị như một bảng nhỏ được nhúng vào dòng văn bản.
+Ví dụ: Sử dụng khi bạn muốn hiển thị một bảng nhỏ bên cạnh văn bản.
+
+***display: list-item;***
+Mô tả: Phần tử sẽ hiển thị như một mục trong danh sách và có một dấu chấm tròn hoặc số đánh dấu.
+Ví dụ: Thường được sử dụng cho danh sách bấm.
+
+***display: initial;***
+Mô tả: Phần tử sẽ hiển thị theo giá trị mặc định của nó, được định nghĩa bởi loại phần tử (ví dụ: block cho div, inline cho a).
