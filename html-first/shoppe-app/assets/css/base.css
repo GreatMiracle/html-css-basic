@@ -17,19 +17,22 @@ html {
   box-sizing: border-box;
 }
 
-.grid {
+/* Responsive-CSS . */
+.base-grid {
   width: 1200px;
   max-width: 100%;
   margin: 0 auto;
 }
 
-.grid__full-with {
+.base-grid__full-with {
   width: 100%;
 }
 
-.grid__row {
+.base-grid__row {
   display: flex;
   flex-wrap: wrap;
+}
+.base-grid__column {
 }
 
 /* Animation */
