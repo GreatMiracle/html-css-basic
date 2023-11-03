@@ -94,7 +94,8 @@
   border-radius: 3px;
   display: none;
   animation: fadeIn__keyframes ease-in 0.3s;
-  z-index: 3;
+  z-index: 5;
+  background-color: #fff;
 }
 
 .hd-nav-l__down:hover .hd-nav-qr {
@@ -1023,7 +1024,7 @@
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 1;
+  /* z-index: 1; */
 
   padding: 2px 4px;
   background-color: #ffe97a;
@@ -1339,6 +1340,5 @@
   margin-top: 8px;
 }
 
-.ft-bd-main__link-market-img-gallery{
-  
+.ft-bd-main__link-market-img-gallery {
 }
