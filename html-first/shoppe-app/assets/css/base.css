@@ -4,7 +4,9 @@
   --text-color: #333;
   --primary-color: #ee4d2d;
   --border-color: #dbdbdb;
+  --width-main: 1200px;
   --width-gap-single: 10px;
+  --width-footer-col: 250px;
 }
 
 * {
@@ -20,7 +22,7 @@ html {
 
 /* Responsive-CSS . */
 .base-grid {
-  width: 1200px;
+  width: var(--width-main);
   max-width: 100%;
   margin: 0 auto;
 }
