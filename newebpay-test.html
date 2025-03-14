@@ -1,0 +1,26 @@
+!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<body>
+
+
+    <form id="paymentForm" method="post" action="https://ccore.newebpay.com/MPG/mpg_gateway">
+        <input type="hidden" name="Version" value="2.0" /><input type="hidden" name="TradeSha"
+            value="C80ED593AB64E9413F2519961691EAD480D3F89019144A328641F4698A5C0428" /><input type="hidden"
+            name="MerchantID" value="TEK1682407426" /><input type="hidden" name="TradeInfo"
+            value="NZLqUGyGVk8O3LxP97fE8NLow1AqeWBzOJJ66Me1/bDEYpwwSyywQihlEzyVMw2lTNMAdhp9afdn4RXFvu9iHjEUznDETGPQQEvRfjH4WEp294ga2FdKEmBlsdrlzu5q4OkF3rPMYcxtAgA/E/ZiCpk8u3CU+eCQezHEDQC8o8FPRQ/HSV1UhlxEUhSep08TAm767u+eKxHT6vlNDqxvEwYgId/taItSpjTnjMIn7ekolYOVaWZ0d2yDeYvtuKqipOPEvojN01ixOBBnvXjVV2VZxTFw3FHVIYuquXWN5yES/QruPe5nbUoS8uUe0l7Kh385kl4Y2ajF5BJotV+6cdzX/cbaJ5f6XsbBg7JkDqEugM+5K1UdniEnQc5VZjRnbibEWJ49CrLrzo2NV1csx8z2bEiTEYfzjzQyI7XqWCQuim82uPFpWuzdBk8W7G4sVuRrz7Yf7i+jONb6E7Le1hBtpMhAkAZCXGiqAak3ibn7J+17ATvd/dN6vE6Peb6JCNzQw5ZPVifOKDC5nbNtikge6Ryvxrgh4x1Xqw/Z5rA=" /><button
+            type="submit">Thanh toán qua NewebPay</button>
+    </form>
+    <script>
+        document.getElementById('paymentForm').submit();
+    </script>
+
+
+</body>
+
+</html>

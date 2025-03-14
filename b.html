@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket STOMP Client</title>
+    <style>
+        #log {
+            width: 80%;
+            height: 300px;
+            border: 1px solid #ccc;
+            overflow-y: scroll;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #f9f9f9;
+        }
+        #input {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>WebSocket STOMP Client</h2>
+    <button onclick="connect()">Connect</button>
+    <button onclick="subscribe()" disabled>Subscribe</button>
+    <div id="log"></div>
+    <div id="input">
+        <textarea id="messageInput" rows="5" cols="50" placeholder="Enter STOMP frame here..."></textarea>
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        let ws;
+        let isConnected = false;
+
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            logDiv.innerHTML += `${new Date().toLocaleTimeString()} - ${message}<br>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function connect() {
+            const token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIxLCJyb2xlIjoiTUVNQkVSIiwiYWNjb3VudCI6ImFkbWluMDIwIiwibmFtZSI6IlBoYW0gUXVhbmcgMSIsImV4cCI6MTc0NDI3MTM0OCwiaXNzIjoid2FsbnV0ZWsifQ.9orJ8arUXm69I-HSa1P-oCWRp5hiGXhXsx4Ax8lwGdQ";
+            ws = new WebSocket('ws://localhost:8080/ws');
+
+            ws.onopen = function() {
+                isConnected = true;
+                document.querySelector('button[onclick="subscribe()"]').disabled = false;
+                log('WebSocket connected');
+                // Gửi frame CONNECT
+                const connectFrame = `CONNECT\naccept-version:1.1,1.0\nheart-beat:10000,10000\nAuthorization:Bearer ${token}\n\n\0`;
+                ws.send(connectFrame);
+                log('Sent CONNECT frame: ' + connectFrame);
+            };
+
+            ws.onmessage = function(event) {
+                log('Received: ' + event.data);
+            };
+
+            ws.onerror = function(error) {
+                log('Error: ' + error.message);
+            };
+
+            ws.onclose = function() {
+                isConnected = false;
+                document.querySelector('button[onclick="subscribe()"]').disabled = true;
+                log('WebSocket disconnected');
+            };
+        }
+
+        function subscribe() {
+            if (!isConnected) {
+                log('Please connect first!');
+                return;
+            }
+            const subscribeFrame = `SUBSCRIBE\nid:sub-1\ndestination:/queue/chatroom/16\n\n\0`;
+            ws.send(subscribeFrame);
+            log('Sent SUBSCRIBE frame: ' + subscribeFrame);
+        }
+
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput').value;
+            if (messageInput && isConnected) {
+                ws.send(messageInput + '\0');
+                log('Sent custom message: ' + messageInput);
+                document.getElementById('messageInput').value = '';
+            } else {
+                log('Please connect first or enter a message!');
+            }
+        }
+    </script>
+</body>
+</html>

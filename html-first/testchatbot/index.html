@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .chat-container {
+            width: 400px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .messages { height: 300px; overflow-y: auto; border-bottom: 1px solid #ddd; padding: 10px; }
+        .message { margin: 5px 0; }
+        .user-message { text-align: right; color: blue; }
+        .bot-message { text-align: left; color: green; }
+        .input-box { margin-top: 10px; display: flex; }
+        .input-box input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .input-box button {
+            padding: 10px;
+            border: none;
+            background-color: blue;
+            color: white;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <h3>Chat with our bot</h3>
+        <div class="messages" id="messages"></div>
+        <div class="input-box">
+            <input type="text" id="user-input" placeholder="Type your message here">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function appendMessage(sender, text) {
+            const messageContainer = document.getElementById('messages');
+            const message = document.createElement('div');
+            message.classList.add('message', `${sender}-message`);
+            message.textContent = text;
+            messageContainer.appendChild(message);
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+        }
+
+        function sendMessage() {
+            const userInput = document.getElementById('user-input');
+            const message = userInput.value;
+            if (message.trim() === '') return;
+            appendMessage('user', message);
+            userInput.value = '';
+            
+            // Gửi tin nhắn tới Dialogflow API
+            fetch('https://dialogflow.googleapis.com/v2/projects/newagent-lrrd/agent/sessions/66771508:detectIntent', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ query: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                appendMessage('bot', data.fulfillmentText);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                appendMessage('bot', 'Sorry, there was an error.');
+            });
+        }
+    </script>
+</body>
+</html>
