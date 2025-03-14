@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket STOMP Client</title>
+    <style>
+        #log {
+            width: 80%;
+            height: 300px;
+            border: 1px solid #ccc;
+            overflow-y: scroll;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #f9f9f9;
+        }
+        #input {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>WebSocket STOMP Client</h2>
+    <button onclick="connect()">Connect</button>
+    <button onclick="subscribe()" disabled>Subscribe</button>
+    <button onclick="unsubscribe()" disabled>Unsubscribe</button>
+    <div id="log"></div>
+    <div id="input">
+        <textarea id="messageInput" rows="5" cols="50" placeholder="Enter your message here..."></textarea>
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        let ws = null;
+        let isConnected = false;
+        const token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIxLCJyb2xlIjoiTUVNQkVSIiwiYWNjb3VudCI6ImFkbWluMDIwIiwibmFtZSI6IlBoYW0gUXVhbmcgMSIsImV4cCI6MTc0NDI3MTM0OCwiaXNzIjoid2FsbnV0ZWsifQ.9orJ8arUXm69I-HSa1P-oCWRp5hiGXhXsx4Ax8lwGdQ";
+
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            logDiv.innerHTML += `${new Date().toLocaleTimeString()} - ${message}<br>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function connect() {
+            if (isConnected) {
+                log('Already connected!');
+                return;
+            }
+
+            ws = new WebSocket('ws://localhost:8080/ws');
+
+            ws.onopen = function() {
+                isConnected = true;
+                document.querySelector('button[onclick="subscribe()"]').disabled = false;
+                document.querySelector('button[onclick="unsubscribe()"]').disabled = true; // Chưa subscribe nên disable unsubscribe
+                log('WebSocket connected');
+                const connectFrame = `CONNECT\naccept-version:1.1,1.0\nheart-beat:10000,10000\nAuthorization:Bearer ${token}\n\n\0`;
+                ws.send(connectFrame);
+                log('Sent CONNECT frame');
+            };
+
+            ws.onmessage = function(event) {
+                log('Received: ' + event.data);
+            };
+
+            ws.onerror = function(error) {
+                log('Error: ' + (error.message || 'Unknown error'));
+            };
+
+            ws.onclose = function() {
+                isConnected = false;
+                document.querySelector('button[onclick="subscribe()"]').disabled = true;
+                document.querySelector('button[onclick="unsubscribe()"]').disabled = true;
+                log('WebSocket disconnected');
+                ws = null;
+            };
+        }
+
+        function subscribe() {
+            if (!isConnected || !ws) {
+                log('Please connect first!');
+                return;
+            }
+            const subscribeFrame = `SUBSCRIBE\nid:sub-1\ndestination:/queue/chatroom/16\n\n\0`;
+            ws.send(subscribeFrame);
+            log('Sent SUBSCRIBE frame');
+            document.querySelector('button[onclick="unsubscribe()"]').disabled = false; // Enable unsubscribe sau khi subscribe
+        }
+
+        function unsubscribe() {
+            if (!isConnected || !ws) {
+                log('Please connect first!');
+                return;
+            }
+            const unsubscribeFrame = `UNSUBSCRIBE\nid:sub-1\n\n\0`;
+            ws.send(unsubscribeFrame);
+            log('Sent UNSUBSCRIBE frame');
+            document.querySelector('button[onclick="unsubscribe()"]').disabled = true; // Disable sau khi unsubscribe
+        }
+
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput').value.trim();
+            if (!messageInput) {
+                log('Please enter a message!');
+                return;
+            }
+            if (!isConnected || !ws) {
+                log('Please connect first!');
+                return;
+            }
+
+            const messageData = {
+                chatRoomId: 16,
+                senderId: 21,    // Nên lấy từ token hoặc cấu hình động
+                receiverId: 22,  // Nên lấy từ giao diện hoặc cấu hình động
+                type: "TEXT",
+                content: messageInput,
+                recordTime: new Date().toISOString().replace('T', ' ').substring(0, 19)
+            };
+
+            fetch('http://localhost:8080/send', { // Đảm bảo endpoint khớp với backend
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(messageData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to send message: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                log('Message sent via API: ' + JSON.stringify(data));
+                document.getElementById('messageInput').value = '';
+            })
+            .catch(error => {
+                log('Error sending message: ' + error.message);
+            });
+        }
+    </script>
+</body>
+</html>

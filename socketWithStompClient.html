@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket STOMP Client</title>
+    <style>
+        #log {
+            width: 80%;
+            height: 300px;
+            border: 1px solid #ccc;
+            overflow-y: scroll;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #f9f9f9;
+        }
+
+        #input,
+        #login-form,
+        #chatroom-form {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>WebSocket STOMP Client</h2>
+
+    <!-- Form đăng nhập -->
+    <div id="login-form">
+        <input type="text" id="account" placeholder="Account" />
+        <input type="password" id="password" placeholder="Password" />
+        <button onclick="login()">Login</button>
+    </div>
+
+    <!-- Form nhập chat room ID -->
+    <div id="chatroom-form" style="display: none;">
+        <input type="number" id="chatRoomId" placeholder="Enter Chat Room ID" disabled />
+        <button onclick="connect()" disabled>Connect</button>
+        <button onclick="subscribe()" disabled>Subscribe</button>
+        <button onclick="unsubscribe()" disabled style="display: none;">Unsubscribe</button>
+        <button onclick="logout()">Logout</button> <!-- Nút Logout -->
+    </div>
+
+    <div id="log"></div>
+    <div id="input" style="display: none;">
+        <input type="number" id="receiverId" placeholder="Enter Receiver ID" />
+        <textarea id="messageInput" rows="5" cols="50" placeholder="Enter message here..."></textarea>
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <!-- Thêm thư viện STOMP từ CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script>
+        let stompClient = null;
+        let isConnected = false;
+        let isSubscribed = false;
+        let token = null;
+        let userId = null;
+        let chatRoomId = null;
+
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            logDiv.innerHTML += `${new Date().toLocaleTimeString()} - ${message}<br>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function login() {
+            const account = document.getElementById('account').value;
+            const password = document.getElementById('password').value;
+
+            if (!account || !password) {
+                log('Please enter account and password!');
+                return;
+            }
+
+            fetch('http://localhost:8080/api/user/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ account, password })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Login failed with status: ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    token = data.token;
+                    const payload = JSON.parse(atob(token.split('.')[1]));
+                    userId = payload.userId;
+                    log('Logged in successfully. Token: ' + token);
+                    document.getElementById('login-form').style.display = 'none';
+                    document.getElementById('chatroom-form').style.display = 'block';
+                    document.querySelector('button[onclick="connect()"]').disabled = false;
+                })
+                .catch(error => log('Login error: ' + error));
+        }
+
+        function connect() {
+            if (!token) {
+                log('Please login!');
+                return;
+            }
+
+            const socket = new WebSocket('ws://localhost:8080/ws');
+            stompClient = Stomp.over(socket);
+
+            stompClient.connect(
+                { 'Authorization': `Bearer ${token}` },
+                function (frame) {
+                    isConnected = true;
+                    document.getElementById('chatRoomId').disabled = false;
+                    document.querySelector('button[onclick="subscribe()"]').disabled = false;
+                    document.getElementById('input').style.display = 'block';
+                    log('Connected: ' + frame);
+                },
+                function (error) {
+                    log('Connection error: ' + error);
+                }
+            );
+
+            stompClient.onWebSocketClose = function () {
+                isConnected = false;
+                isSubscribed = false;
+                stompClient = null;
+                document.getElementById('chatRoomId').disabled = true;
+                document.querySelector('button[onclick="subscribe()"]').disabled = true;
+                document.querySelector('button[onclick="unsubscribe()"]').style.display = 'none';
+                log('WebSocket disconnected');
+            };
+        }
+
+        function subscribe() {
+            chatRoomId = document.getElementById('chatRoomId').value;
+            if (!stompClient || !isConnected || !chatRoomId) {
+                log('Please connect and enter a chat room ID first!');
+                return;
+            }
+
+            stompClient.subscribe(`/queue/chatroom/${chatRoomId}`, function (message) {
+                log('Received: ' + message.body);
+            }, { id: 'sub-1' });
+
+            isSubscribed = true;
+            const unsubscribeButton = document.querySelector('button[onclick="unsubscribe()"]');
+            unsubscribeButton.style.display = 'inline';
+            unsubscribeButton.disabled = false;
+            log(`Subscribed to /queue/chatroom/${chatRoomId}`);
+        }
+
+        function unsubscribe() {
+            if (!stompClient || !isConnected) {
+                log('Please connect first!');
+                return;
+            }
+            stompClient.unsubscribe('sub-1');
+            isSubscribed = false;
+            const unsubscribeButton = document.querySelector('button[onclick="unsubscribe()"]');
+            unsubscribeButton.style.display = 'none';
+            unsubscribeButton.disabled = true;
+            log(`Unsubscribed from /queue/chatroom/${chatRoomId}`);
+        }
+
+        function logout() {
+            if (stompClient && isConnected) {
+                stompClient.disconnect(() => {
+                    log('Disconnected from WebSocket');
+                });
+            }
+
+            // Reset trạng thái
+            stompClient = null;
+            isConnected = false;
+            isSubscribed = false;
+            token = null;
+            userId = null;
+            chatRoomId = null;
+
+            // Ẩn các form và bật lại form đăng nhập
+            document.getElementById('chatroom-form').style.display = 'none';
+            document.getElementById('input').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+
+            // Reset các input và nút
+            document.getElementById('account').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('chatRoomId').value = '';
+            document.getElementById('chatRoomId').disabled = true;
+            document.getElementById('receiverId').value = '';
+            document.getElementById('messageInput').value = '';
+            document.querySelector('button[onclick="connect()"]').disabled = true;
+            document.querySelector('button[onclick="subscribe()"]').disabled = true;
+            document.querySelector('button[onclick="unsubscribe()"]').style.display = 'none';
+            document.querySelector('button[onclick="unsubscribe()"]').disabled = true;
+
+            log('Logged out successfully');
+        }
+
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput').value;
+            const receiverId = document.getElementById('receiverId').value;
+
+            if (!messageInput || !isConnected || !chatRoomId || !receiverId) {
+                log('Please connect, enter a chat room ID, receiver ID, and a message!');
+                return;
+            }
+
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const recordTime = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+
+            const messageData = {
+                chatRoomId: parseInt(chatRoomId),
+                senderId: userId,
+                receiverId: parseInt(receiverId),
+                type: "TEXT",
+                content: messageInput,
+                recordTime: recordTime
+            };
+
+            fetch('http://localhost:8080/api/chat/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(messageData)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('API call failed with status: ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    log('Message sent via API: ' + JSON.stringify(data));
+                    document.getElementById('messageInput').value = '';
+                })
+                .catch(error => log('Error sending message: ' + error));
+        }
+    </script>
+</body>
+
+</html>
